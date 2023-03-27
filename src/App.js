@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './Companents/Navbar'
+import UserList from './Companents/UserList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import React, { Component } from 'react'
+import Search from './Companents/Search';
+
+export class App extends Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      loading:false,
+       users:[]
+    }
+  }
+
+ searchUsers=(keyword)=>{
+  this.setState({loading:true});
+  fetch("https://api.github.com/search/users?q="+keyword)
+  .then(response=>response.json())
+  .then(data=>this.setState({users:data.items,loading :false}),1000);
+ }
+  render() {
+    
+    return (
+      <>
+    <Navbar  />
+    <Search searchUsers={this.searchUsers}/>
+    <div className='container mt-3'>
+    <UserList users={this.state.users} loading={this.state.loading}/>
     </div>
-  );
+    
+    </>
+    );
+   
+  }
 }
 
-export default App;
+export default App
