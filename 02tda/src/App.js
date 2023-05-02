@@ -1,59 +1,76 @@
-import './App.css';
-import {useState} from 'react'
+// import React from 'react'
+// import './App.css';
 
-function App() {
+// const App = () => {
+//   return (
+//     <div>
+//       <Peader/>
+//       <Aqe/>
+    
 
-  const[newItem,setNewItem]=useState("")
-  const [items,setItems]=useState([]);
+//     </div>
+//   )
+// }
 
+// const Peader=()=>{
+//   return(  <h1 className='Peader'>Front end technologies</h1>
+//   )
+// }
 
-  function addItem(){
+// const Aqe = () =>{
+//   return(
+//     <>
+//     <img src='https://www.mytoworld.com/wp-content/uploads/2020/10/html-nedir-501x381.png'></img>
+//     <img src='https://www.mytoworld.com/wp-content/uploads/2020/10/html-nedir-501x381.png'></img>
 
+//     <img src='https://www.mytoworld.com/wp-content/uploads/2020/10/html-nedir-501x381.png'></img>
 
-    if(!newItem){
-      alert("enter an item");
-      return;
-    }
+//     <img src='https://www.mytoworld.com/wp-content/uploads/2020/10/html-nedir-501x381.png'></img>
 
+//     </>
+//   )
+//   }
+ 
 
-const item={
-  id:Math.floor(Math.random()*1000),
-  value:newItem
-} ;
-setItems((oldItems)=>[...oldItems,item])
-setNewItem("") }
+// export default App
+import React from 'react'
+import './App.css'
 
+const App = () => {
+  return (
+    <div className='container'>
+      <BaslikC/>
+      <InputS/>
+      <ButtonS/>
+    </div>
+  )
+}
+const BaslikC=()=>{
+  return(
+    <>
+    <h1 className="header">SUBSCRİBE</h1>
 
-function deleteItem(id){
-  const newArray = items.filter(item => item.id !== id);
-  setItems(newArray);
+    <p>lorem aslkdjas lkasjdlkasjd kljasdjalskdj lkasjdlaksjd lkkasjdlkja</p>
+
+    </>
+  )
 }
 
-
-
-return (
-  <div className="App">
-     <h1>Todo List App</h1>
-     <form onSubmit={(e)=> {
-       e.preventDefault();
-       addItem();
-     }}>
-     <input 
-     type="text"
-     placeholder='Add an Item...'
-     value={newItem}
-     onChange={e => setNewItem(e.target.value)}
-     />
-     </form>
-     <button onClick={(e) => addItem()}>Add</button>
-
-     <ul>
-      {items.map(item => {
-       return <li key={item.id}> {item.value} <button onClick={e => deleteItem(item.id)}>X</button>  </li>
-      })}
-     </ul>
-   </div>
- );
+const InputS=()=>{
+  return(
+    <>
+    <div style={{marginTop:"30px",textAlign:"center"}}>
+    <input type='text' placeholder='ad'  className='Input'/>
+    <input type='text' placeholder='soyad'  className='Input'/>
+    <input type='email' placeholder='email'  className='Input'/>
+    </div>
+    </>
+  )
 }
 
-export default App;
+const ButtonS=()=>{
+  return(
+    <button>SUBSCRİBE</button>
+  )
+}
+export default App
