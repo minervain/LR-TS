@@ -391,7 +391,7 @@ const buttonStyles = {
 const Button = () => <button style={buttonStyles}> action </button>
 
 ```
-rastgele bir onaltılık sayı görüntüleyen daha işlevsel başka bir bileşen yapalım.
+rastgele bir onaltılık sayı görüntüleyen daha component fonksiyonu yazalım 
 
 ```javascript
 import React from 'react'
