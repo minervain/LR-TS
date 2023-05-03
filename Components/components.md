@@ -1,4 +1,4 @@
-Javascript Fonksiyonu
+<h4>Javascript Fonksiyonu </h4>
 
 bir javascript fonksiyonu nromal bir fonksiyon ya da arrow fonksiyon olabilir
 
@@ -16,7 +16,7 @@ getUserInfo('Ali Osman', 'UCAR', 'Turkey', 'FullStack Developer', skills)**
 
 ```
 
-Javascript Classları
+<h3>Javascript Classları </h3>
 
 Sınıf, bir nesnenin planıdır. Farklı nesneler yaratmak için bir sınıf oluşturuyoruz. Ek olarak, üst sınıfın tüm yöntemlerini ve özelliklerini miras alarak alt sınıflar yaratabiliriz.
 
@@ -66,7 +66,7 @@ const child = new Child(
 
 ```
 
-React Component Oluşturma
+<h3> React Component Oluşturma </h3> 
 
 Bir JavaScript işlevi kullanarak, işlevsel bir React bileşeni oluşturabiliriz.
 
@@ -183,7 +183,7 @@ const Header = () => (
 const UserCard = () => (
   <div className='user-card'>
     <img src={aliosman} alt='ali osman' />
-    <h2>Asabeneh Yetayeh</h2>
+    <h2>Ali Osman</h2>
   </div>
 );
 
@@ -230,7 +230,7 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 ```
 
-React Component'te JSX'e veri enjekte etme
+<h3> React Component'te JSX'e veri enjekte etme </h3>
 
 Şimdiye kadar, JSX öğeleri üzerinde statik veriler kullandık. Şimdi farklı veri türlerini dinamik veri olarak geçirelim. Dinamik veriler, diziler, sayılar, mantıksal değerler, diziler veya nesneler olabilir. Veri türlerinin her birini adım adım görelim. Bir JSX'e veri enjekte etmek için {} parantezini kullanırız.
 
@@ -375,7 +375,7 @@ const app = () => (
 ReactDOM.render(<App />, rootElement);
 ```
 
-Componentlere css özelliği eklemek
+<h3> Componentlere css özelliği eklemek </h3>
 
 ```javascript
 const Button = () => <button>action</button>

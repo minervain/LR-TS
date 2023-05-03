@@ -1,6 +1,6 @@
-Props
+<h1>Props </h1>
 
-Props Nedir?
+<h4> Props Nedir? </h4>
 
 Props, React'te özellikler anlamına gelen ve bir bileşenden diğerine ve çoğunlukla ana bileşenden alt bileşene veri aktarmak için kullanılan özel bir anahtar kelimedir. Propların bir veri taşıyıcısı veya veri taşıma aracı olduğunu söyleyebiliriz.
 
@@ -61,7 +61,7 @@ const Header = () => (
 )
 
 ```
-Props object`
+ <h2> Props object` </h2>
 
 React props, bir React bileşeni oluşturduğunuzda anında elde ettiğiniz bir nesnedir. Bileşene özellikleri aktarmadan önce, props nesnesinde ne elde ettiğimize bir bakalım.
 
@@ -138,7 +138,7 @@ ReactDOM.render(<App />, rootElement)
 
 Şimdi, console.log(props) yaptığınızda aşağıdaki nesneyi almalısınız, bu, Header componenttine ilettiğimiz karşılama özelliğinin props nesnesinin içinde bulunabileceği anlamına gelir.
 {
-  welcome: 'Welcome to 30 Days Of React'
+  welcome: 'hello'
 }
 
 Yukarıdaki kodda da görebileceğiniz gibi, sadece tek bir prop'u Header bileşenine, yani karşılama props'una geçirdik. Bir bileşenin bir veya daha fazla donanımı olabilir. Prop'lar farklı veri türleri olabilir. Bir dize, sayı, boole, dizi, nesne veya işlev olabilir.
@@ -146,7 +146,7 @@ Yukarıdaki kodda da görebileceğiniz gibi, sadece tek bir prop'u Header bileş
 
 
 
-String props type
+<h2>String props type </h2>
 
 ```javascript
 import React from 'react'
@@ -224,8 +224,7 @@ const Header = (props) => (
   </header>
 )
 
-// The App, or the parent or the container component
-// Functional Component
+// Functional Component Kapsayıcı
 const App = () => {
   const welcome = 'hello'
   const title = 'Getting Started React'
@@ -252,7 +251,7 @@ ReactDOM.render(<App />, rootElement)
 ```
 
 
-Number props type
+<h2>Number props type </h2>
 
 
 ```javascript
@@ -287,7 +286,7 @@ ReactDOM.render(<App />, rootElement)
 
 
 
-Boolean props type
+<h2> Boolean props type </h2>
 
 ```javascript
 import React from 'react'
@@ -320,7 +319,7 @@ ReactDOM.render(<App />, rootElement)  ```
 
 
 
-Array props type
+<h2>Array props type </h2>
 
 Programlamada diziler ve nesneler, farklı problemleri çözmek ve verileri daha yapılandırılmış bir şekilde depolamak için en sık kullanılan veri yapılarıdır. Bu nedenle, dizi biçimindeki verilerle oldukça sık karşılaşıyoruz. Bir diziyi bir bileşene destek olarak iletelim
 
@@ -363,7 +362,7 @@ const rootElement = document.getElementById('root')
 ReactDOM.render(<App />, rootElement)
 ```
 
-Object props type
+<h2>Object props type </h2>
 
 Bir nesneyi bir React bileşenine destek olarak iletebiliriz. Bir örnek görelim. Önceki Header props'u nesne olarak değiştirebiliriz. Şimdilik daha iyi anlamak için birkaç özelliği değiştirelim.
 
@@ -669,7 +668,7 @@ const Header = (props) => {
 // Functional Component
 const App = () => {
   const data = {
-    welcome: 'Welcome to 30 Days Of React',
+    welcome: 'hello',
     title: 'Getting Started React',
     subtitle: 'JavaScript Library',
     author: {
@@ -744,11 +743,10 @@ const Header = (props) => {
   )
 }
 
-// The App, or the parent or the container component
-// Functional Component
+// Functional Component Kapsayıcı
 const App = () => {
   const data = {
-    welcome: 'Welcome to 30 Days Of React',
+    welcome: 'hello',
     title: 'Getting Started React',
     subtitle: 'JavaScript Library',
     author: {
@@ -824,7 +822,7 @@ const Header = ({
 // Functional Component
 const App = () => {
   const data = {
-    welcome: 'Welcome to 30 Days Of React',
+    welcome: 'hello',
     title: 'Getting Started React',
     subtitle: 'JavaScript Library',
     author: {
