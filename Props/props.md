@@ -406,14 +406,6 @@ ReactDOM.render(<App />, rootElement)
 
 
 
-
-
-
-
-
-
-
-
 Şimdi, önceki tüm Başlık özelliklerini bir nesneye değiştirelim.
 
 ```javascript
@@ -469,7 +461,7 @@ const App = () => {
       firstName: 'Ali Osman',
       lastName: 'Ucar',
     },
-    date: new Date(), // date needs to be formatted to a human readable format
+    date: new Date(), //tarihin insan tarafından okunabilir bir formatta biçimlendirilmesi gerekiyor
   }
 
   return (
@@ -481,4 +473,144 @@ const App = () => {
 const rootElement = document.getElementById('root')
 ReactDOM.render(<App />, rootElement)
 
+```
+
+
+<h2>Function prop types </h2>
+
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+// A button component
+
+const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
+
+
+// Functional Component Kapsayıcı
+const App = () => {
+  const sayHi = () => {
+    alert('Hi')
+  }
+
+  return (
+    <div className='app'>
+      <Button text='Say Hi' onClick={sayHi} />
+    </div>
+  )
+}
+const rootElement = document.getElementById('root')
+ReactDOM.render(<App />, rootElement)
+
+```
+
+
+
+Süslü parantez içine bir fonksiyon bile yazabiliriz.
+
+````javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+// A button component
+
+const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
+
+// Functional  Kapsayıcı component
+const App = () => {
+  return (
+    <div className='app'>
+      <Button text='Say Hi' onClick={() => alert('Hi')} />
+    </div>
+  )
+}
+const rootElement = document.getElementById('root')
+// we render the JSX element using the ReactDOM package
+ReactDOM.render(<App />, rootElement)
+
+```
+````
+
+
+Şimdi, Props olarak farklı fonksiyonları uygulayalım
+
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+
+
+// Functional Component
+const App = () => {
+  const greetPeople = () => {
+    alert('hello')
+  }
+
+  return (
+    <div className='app'>
+      <Button text='Greet People' onClick={greetPeople} />
+      <Button text='Show Time' onClick={() => alert(new Date())} />
+    </div>
+  )
+}
+const rootElement = document.getElementById('root')
+ReactDOM.render(<App />, rootElement)
+
+```
+
+Yukarıdaki örnekte, onClick, greetPeople işlevini tutmak için bir donanımdır. HTML'de onclick, onmouseover, onhover, onkeypress ve benzeri olay işleyicileri bulunur. React'te bu işleyiciler camelCase'dedir. Örneğin onClick, onMouseOver, onKeyPress vb. React'teki olayları diğer bölümde detaylı olarak ele alacağız.
+
+Bir React bileşeninde props olarak işlevin nasıl ele alınacağını net bir şekilde anlamak için props olarak daha fazla işlev görelim.
+
+Bu bileşen ayı, tarihi ve yılı bir uyarı kutusu olarak gösterir.
+
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+ //Saati Pzt tarihinde, yıl biçiminde görüntüleme işlevi, örneğin 4 Ekim 2020
+ 
+ const showDate = (time) => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
+
+  const month = months[time.getMonth()].slice(0, 3)
+  const year = time.getFullYear()
+  const date = time.getDate()
+  return ` ${month} ${date}, ${year}`
+ }
+
+// A button component
+
+const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
+
+// Functional Component
+const App = () => {
+  const handleTime = () => {
+    alert(showDate(new Date()))
+  }
+  const greetPeople = () => {
+    alert('hello')
+  }
+  return (
+    <div className='app'>
+      <Button text='show time' onClick={handleTime} />
+      <Button text='Greet People' onClick={greetPeople} />
+    </div>
+  )
+}
+const rootElement = document.getElementById('root')
+ReactDOM.render(<App />, rootElement)
 ```
