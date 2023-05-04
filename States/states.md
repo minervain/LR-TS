@@ -86,3 +86,57 @@ function App() {
 }
 ```
 Burada setAddress kısmında object’in tek bir elemanını değiştirmek istiyorsak; var olan diğer değerleri korumamız lazım. Bu yüzden yine …address dememiz gerekiyor. Yoksa sadece setAddress ile set edilen değer tutulur.
+
+<h3> SAYAÇ UYGULAMASI </h3>
+
+```javascript
+import {useState} from "react";  
+
+function Counter(){
+    const [count, setCount]=useState(0);
+    // arttirma islemini fonksiyon ile de saglayabiliriz
+    const increase= () => {
+        setCount(count + 1);
+    }
+  // yazdigimiz kod ile azaltma islemi yaptik
+  // increase fonksiyonu ile arttirma islemi yaptik
+    return(
+        <div>
+           <h1>{count}</h1>
+           <button onClick={() => setCount(count-1)}>Descrease</button>
+           <button onClick={increase}>Increase</button>
+        </div>
+    )
+}
+export default Counter
+```
+
+
+<h3>Input için State Tanımı Yapmak
+ </h3>
+ 
+ ```js
+ import {useState} from "react";
+
+function InputExample(){
+// const [name, setName] = useState(" ") 
+// const [surName, setSurname] = useState(" ")  
+const [form, setForm]= useState({name:"", surName:""});
+
+const onChangeInput = (e) => {
+       setForm({...form, [e.target.name]:e.target.value})
+}
+return <div>
+    Name <br />
+    <input name="name" value={form.name} onChange={onChangeInput}/>
+    <br />
+    Surname <br />
+    <input  name="surName" value={form.surName} onChange={onChangeInput}/>
+    <br />
+    {form.name} {form.surName}
+</div>
+}
+
+export default InputExample;
+ 
+ ```
