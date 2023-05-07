@@ -1,11 +1,11 @@
 import React from 'react'
 
-function index() {
+function List() {
   return (
     <div>
-      asd
+      ContactList
     </div>
   )
 }
 
-export default index
+export default List
