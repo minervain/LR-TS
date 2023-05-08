@@ -1,4 +1,5 @@
 <h1> Lifecycle (Hayat Döngüsü) Nedir ? </h1>
+<img src='https://www.cronj.com/blog/wp-content/uploads/Artboard-2.png'/>
 
 <strong>Bir React componentinin hayat döngüsü, componentin oluşturulduğu an ve güncellendiği an itibariyle yaşadığı aşamalardır. Her bir hayat döngüsü aşaması, componentin verilerinin güncellenmesi veya yeniden render edilmesi gibi belirli işlemleri içerebilir.
 

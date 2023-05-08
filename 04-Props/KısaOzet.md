@@ -195,14 +195,14 @@ function App() {
   return (
     <>
       <User
-        name="zehra"
-        surname="cakir"
+        name="Ali"
+        surname="Ucar"
         isLoggedIn={true} 
         age={29} 
         friends={["Ahmet", "Mehmet", "Yusuf"]} 
         friends2={friends2}
         address={{
-          title: "Merkez/Isparta",
+          title: "Merkez/Tokat",
           zip: 24755
         }} />
     </>

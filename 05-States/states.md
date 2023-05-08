@@ -1,5 +1,7 @@
 <h1>React State Nedir ? Nasıl Oluşturulur ?</h1>
 
+<img src='https://miro.medium.com/v2/resize:fit:720/format:webp/1*CHJGo3wr7Llx8vcUde1zsQ.jpeg'>
+
 <strong>State, bir uygulamanın bellekte tuttuğu verilerin durumunu ifade eder. Bu veriler, kullanıcının etkileşimi sonucu değişebilir ve uygulamanın diğer bölümlerinde kullanılabilir.
 
 State oluşturmak için, öncelikle bir veri yapısı tanımlanmalıdır (örneğin, JavaScript objesi). Daha sonra, bu veri yapısını değiştirmek için bir güncelleme fonksiyonu yazılmalı ve bu fonksiyon React tarafından tetiklenebilecek şekilde tanımlanmalıdır. Son olarak, state verileri, component render fonksiyonunda kullanılabilir hale getirilmelidir.</strong>
