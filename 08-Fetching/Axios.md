@@ -27,9 +27,9 @@ import axios from 'axios';
 
 ```
 
-<b>Örnek axios kullanımı : </b>
+<b>Örnek axios kullanımı :</b>
 
-``` js
+
 
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
