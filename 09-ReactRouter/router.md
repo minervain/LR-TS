@@ -328,3 +328,5 @@ App.js dosyamızda Switch(hangisine uyarsa onu çalıştıran yapı) içerisinde
 ```
 
 path=”*” ile diğer rotaların dışında yazılan her şeyi kabul etmesini sağlıyoruz.
+
+<p> Daha detaylı çalışmak için bu sayfaryı ziyaret edin <a href='https://reactrouter.com/en/main/components/link'>DETAYLI ÇALIŞ</a></p>
