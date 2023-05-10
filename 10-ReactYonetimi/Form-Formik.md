@@ -231,3 +231,36 @@ initialValues={{
 
 ```
 
+<h2>useFormik</h2>
+
+Kodumuzu daha güzel, daha temiz bir hale getirmek için neler yapabiliriz bir bakalım.
+
+useFormik ile render kısmını daha temiz bir hale getiririz.
+
+Kullanımına bakalım. İlk olarak useFormik’ import edelim.
+
+```js
+import { Formik, useFormik } from 'formik';
+
+```
+
+Daha önce return içerisinde yazmış olduğumuz initialValues’i useFormik kullanarak yapacağımız değişkene atayalım.
+
+```js
+const { handleSubmit, handleChange, values } = useFormik({
+    initialValues: {
+      firstName: 'AliOsman',
+          lastName: 'Ucar',
+          email: 'aliosmanucar987@gmail.com',
+          gender: 'male',
+          hobies: [],
+          country:"Turkey"
+    },
+    onSubmit: values => {
+      console.log(values);
+    },
+  });
+
+```
+
+Görünüme baktığımızda herhangi bir değişiklik olmadı ama render edilecek kodumuz da bir sadelik ortaya çıktı.
