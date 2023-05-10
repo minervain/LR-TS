@@ -30,6 +30,8 @@ import axios from 'axios';
 <b>Örnek axios kullanımı :</b>
 
 
+```
+
 
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
