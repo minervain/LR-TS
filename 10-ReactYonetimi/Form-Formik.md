@@ -264,3 +264,221 @@ const { handleSubmit, handleChange, values } = useFormik({
 ```
 
 Görünüme baktığımızda herhangi bir değişiklik olmadı ama render edilecek kodumuz da bir sadelik ortaya çıktı.
+
+<h3>Form Validasyonları</h3>
+
+Validasyon işlemlerini yupjs ile yapıyoruz. yupjs backend ve frontend ile kullanılabilir.
+
+yupjs kurulumuna geçelim :
+
+cmd de çalıştığımız dosya dizini içerisine girelim ve aşağıdaki kodu çalıştıralım.
+
+<!-- npm i yup -->
+
+
+
+Daha derli toplu olsun diye yeni bir SignUp adında component oluşturalım ve App.js de yaptığımız işleri taşıyalım.
+
+
+components dizini altına bir de validation.js adında bir component oluşturalım. Bu da bizim yupjs’i import edeceğimiz componentimiz olsun.
+
+```js
+import * as yup from 'yup';
+
+```
+
+Sonrasında bir şema yazacağız. Bu şemada bütün inputlarımızın hangi kurala tabi olduğunu belirtebiliyoruz.
+
+```js
+const validations = yup.object().shape({
+    email: yup.string().email(),
+});
+```
+
+SignUp.js de validation.js’i import edelim
+
+
+SignUp.js içerisindeki validations’u kullanalım, 
+validationSchema:validations diyerek kullandık.
+
+```js
+const {handleSubmit, handleChange, values} = useFormik({
+        initialValues: {
+              email: '',
+              password: "",
+              passwordConfirm: ""
+        },
+        onSubmit: values => {
+          console.log(values);
+        },
+        validationSchema:validations
+      });
+```
+
+Boş olduğunda da gönderilmesini engellemek istersek kodumuza required()’ı eklememiz gerekecek.
+
+```js
+import * as yup from 'yup';
+const validations = yup.object().shape({
+    email: yup.string().email().required(),
+});
+ 
+export default validations;
+```
+
+Email formatına uygun bir şey girilmediği sürece submit işlemi yapılmayacaktır. 
+
+Email kısmının zorunlu olduğunu belirtmiştik, password kısmının da zorunlu olduğunu belirtelim.
+
+```js
+password: yup.string().min(8).required()
+```
+Burada minumum 8 karakterden oluşan bir parola girilmesini bekliyoruz.
+
+
+passwordConfirm ile girilen şifreyi kontrol edeceğiz. Burada kontrolü oneOf() ile yapacağız.
+
+```js
+import * as yup from 'yup';
+const validations = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(8).required(),
+    passwordConfirm: yup.string().oneOf([yup.ref("password")]).required()
+});
+ 
+export default validations;
+```
+
+3 alanda doldurulmadığı ve password ile passwordConfirm alanı aynı olmadığı sürece submit işlemi yapamıyoruz.
+
+<h3>Hata mesajları</h3>
+
+Şimdide hata mesajlarının görüntülenmesi işlemini yapmaya çalışalım.
+
+Öncelikle emailden başlayalım. Email formatında giriş yapılana kadar ekranda kırmızı renkli bir uyarı versin.
+
+SignUp.js içerisinde errors tanımı yapalım, hataları errors üzerinden yakalayabiliriz.
+
+```js
+const {handleSubmit, handleChange, values, errors} = useFormik({
+        initialValues: {
+              email: '',
+              password: "",
+              passwordConfirm: ""
+        },
+        onSubmit: values => {
+          console.log(values);
+        },
+        validationSchema:validations
+      });
+
+```
+Email inputunun hemen altında şu kodu yazalım.
+
+```js
+{
+	errors.email && (<div className='error'>{errors.email}</div>)
+}
+```
+
+Böylelikle şöyle bir ekran görüntüsü elde edeceğiz.
+Email formatında giriş yapılmazsa
+<img src='https://miro.medium.com/v2/resize:fit:4800/format:webp/1*9uvpnYWZo8u4JzCLvhLDQA.png'/>
+
+Burada bir problemle karşılaşıyoruz.
+
+<img src='https://miro.medium.com/v2/resize:fit:4800/format:webp/1*Xe2IH47JJ46euZ4lTzupgA.png'/>
+
+
+Herhangi bir inputa giriş yapmaya başlayınca diğer inputlarda da uyarı almaya başlıyoruz. Kullanıcı kullanımı için bunu önlemeliyiz. İlgili inputa daha önce touch olmuş mu bunu anlayıp ona göre hareket etmemiz lazım.
+
+Herhangi bir touch işlemi kontrolü yapabilmemiz için formik’in “touched” adında bir kullanımı var.
+
+```js
+const {handleSubmit, handleChange, values, errors, touched} = useFormik({
+        initialValues: {
+              email: '',
+              password: "",
+              passwordConfirm: ""
+        },
+        onSubmit: values => {
+          console.log(values);
+        },
+        validationSchema:validations
+      });
+```
+
+Inputtan ayrıldığımız anda daha önce handleChange’i çalıştırdığımız gibi “handleBlur” u çalıştırmamız lazım.
+
+```js
+const {handleSubmit, handleChange,handleBlur, values, errors, touched} = useFormik({
+        initialValues: {
+              email: '',
+              password: "",
+              passwordConfirm: ""
+        },
+        onSubmit: values => {
+          console.log(values);
+        },
+        validationSchema:validations
+      });
+```
+
+Sonrasında inputlara “onBlur={handleBlur}” u eklememiz gerekiyor.
+```js
+<label>Email</label>
+<input name="email" onChange={handleChange} value={values.email} onBlur={handleBlur} />
+```
+
+
+Birde inputların altında oluşturduğumuz {errors. ….. } ile başlayan bloklarımızda touched.inputName’i eklememiz lazım.
+
+```js
+{
+  errors.email && touched.email && (<div className='error'>{errors.email}</div>)
+}
+```
+
+Ayrıca istersek hata mesajlarını özelleştirebiliriz. Mesela geçersiz formatta bir email girilmesi durumunda ekranda “Geçersiz bir email girdiniz!” yazsın. Bu işlemi validation.js sayesinde yapacağız.
+
+```js
+import * as yup from 'yup';
+const validations = yup.object().shape({
+    email: yup.string().email("Geçersiz bir email girdiniz!").required(),
+    password: yup.string().min(8).required(),
+    passwordConfirm: yup.string().oneOf([yup.ref("password")]).required()
+});
+ 
+export default validations;
+```
+<img src='https://miro.medium.com/v2/resize:fit:4800/format:webp/1*9Ivysse7_ZWpKlAJXaUTVQ.png'/>
+
+Eğer zorunlu kılınan(required()) alan varsa ve boş bırakılmışsa oraya da “Zorunlu alan” uyarısını verdirebiliriz. Yine bu işlemi validation.js sayesinde yapacağız.
+
+```js
+import * as yup from 'yup';
+const validations = yup.object().shape({
+    email: yup.string().email("Geçersiz bir email girdiniz!").required("Zorunlu alan"),
+    password: yup.string().min(8).required(),
+    passwordConfirm: yup.string().oneOf([yup.ref("password")]).required()
+});
+ 
+export default validations;
+
+```
+
+<img src='https://miro.medium.com/v2/resize:fit:4800/format:webp/1*mC6eTe0CcD6m49pvvzIznw.png'>
+
+
+Bu işlemleri diğer inputlar içinde yapalım. İşlemlerimizi yine validation.js içerisinde yapıyoruz.
+
+```js
+import * as yup from 'yup';
+const validations = yup.object().shape({
+    email: yup.string().email("Geçersiz bir email girdiniz!").required("Zorunlu alan"),
+    password: yup.string().min(8, "Parola 8 karakterden kısa olamaz").required("Zorunlu alan"),
+    passwordConfirm: yup.string().oneOf([yup.ref("password")],"Girilen şifre password ile aynı değil").required("Zorunlu alan")
+});
+ 
+export default validations;
+```
