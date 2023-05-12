@@ -64,3 +64,118 @@ export default React.memo(Header)
 Peki bu Header ne zaman render edilecek ? Header componentine geçtiğimiz proplar ne zaman değişirse Header o zaman yeniden render edilecek. Eğer number’ı Header property olarak alsaydı, number’ın her artışında Header yeniden render edilecekti. Dolayısıyla buradaki render işlemi gereksiz bir render işlemi olmaktan çıkıyor.
 
 Özetle : React.memo’yu kullandığımızda proplar karşılaştırılır ve eğer aynıysa baştan render edilmez, ama değişen varsa baştan render edilir.
+
+```js
+
+import React from 'react'
+
+function Header() {
+console.log("Header component re-rendered")
+  return (
+    <div>
+      Header
+    </div>
+  )
+}
+
+export default React.memo(Header)
+```
+
+<img src='https://miro.medium.com/v2/resize:fit:4800/format:webp/1*te6Z3tkwCppl5WhoUH7P3A.png'/>
+
+Peki bu Header ne zaman render edilecek ? Header componentine geçtiğimiz proplar ne zaman değişirse Header o zaman yeniden render edilecek. Eğer number’ı Header property olarak alsaydı, number’ın her artışında Header yeniden render edilecekti. Dolayısıyla buradaki render işlemi gereksiz bir render işlemi olmaktan çıkıyor.
+
+Özetle : React.memo’yu kullandığımızda proplar karşılaştırılır ve eğer aynıysa baştan render edilmez, ama değişen varsa baştan render edilir.
+
+<h3> useMemo</h3>
+
+App.js’de data isimli bir object tanımlayalım ve bu object’i Header prop olarak alsın.
+
+```js
+import './App.css';
+import { useState } from 'react';
+import Header from './components/Header';
+function App() {
+  const [number, setNumber]=useState(0);
+  const data={name :" Ali"};
+  return (
+    <div className="App">
+      <Header number={number < 5 ? 0 : number} data={data} />
+      <h1>{number}</h1>
+      <button onClick={() => setNumber(number + 1)}>Click</button>
+      
+    </div>
+  );
+}
+
+export default App;
+```
+
+Header.js
+
+```js
+import React from 'react'
+
+function Header({number,data}) {
+console.log("Header component re-rendered")
+  return (
+    <div>
+      Header-{number}
+      <br /><br />
+      <code>{JSON.stringify(data)}</code>
+    </div>
+  )
+}
+
+export default React.memo(Header)
+
+```
+
+“React.memo’yu kullandığımızda proplar karşılaştırılır ve eğer aynıysa baştan render edilmez, ama değişen varsa baştan render edilir” demiştik. Fakat burada proplar değişmediği halde her butona basıldığında yeniden bir render etme işlemi söz konusu. Peki neden ? Javascript’te şöyle bir durum söz konusu primitiveler birbirine denk olabilirler. Örneğin 5===5. Ama bir object’in başka bir object’ e olan denkliği sorgularsak burada karşımıza farklı bir durum çıkacak. Çünkü iki object’in bellek üzerindeki referansları farklı (bu durum array’lerde de aynıdır), dolayısıyla bunların denkliğini sorguladığımız zaman karşımıza false çıktısı geliyor. Her butona basıldığında bu ikisinin farklı proplarmış gibi algılanması sonucunda da Header yeniden render ediliyor.
+
+
+Böyle bir sorunda 2 çözüm yolumuz var.
+
+Object’i component’in dışında bir yerde tanımlayabiliriz.
+
+```js
+import './App.css';
+import { useState } from 'react';
+import Header from './components/Header';
+const data={name :" Ali"};
+function App() {
+  const [number, setNumber]=useState(0);
+ 
+  return (
+    <div className="App">
+      <Header number={number < 5 ? 0 : number} data={data} />
+      <h1>{number}</h1>
+      <button onClick={() => setNumber(number + 1)}>Click</button>
+      
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+Object’i kesinlikle component içerisinde tanımlamamız gerekiyorsa :
+
+useMemo hook’unu kullanmak
+
+İlk olarak useMemo’yu import ediyoruz.
+
+
+Syntax olarak useEffect()’e benziyor. useMemo’da bir dependency array alıyor.
+
+```js
+
+const data=useMemo(() => {
+    return {name:"Ali"}
+  },[]);
+
+```
+
+Böylelikle Header componenti yeniden render olmuyor. Peki Header componenti ne zaman render edilecek ? Array’de belirtilen değerler değiştiği anda bir hesaplama yapılır ve ona göre render edilir.
+
