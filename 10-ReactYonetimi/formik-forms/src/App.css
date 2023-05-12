@@ -1,0 +1,16 @@
+  .App {
+    margin-top: 100px;
+    text-align: center;
+  }
+
+  label{
+    display: block;
+  }
+
+  .radios{
+    display: inline;
+  }
+  
+  .errors{
+    color: red;
+  }
