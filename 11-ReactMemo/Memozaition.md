@@ -179,3 +179,79 @@ const data=useMemo(() => {
 
 Böylelikle Header componenti yeniden render olmuyor. Peki Header componenti ne zaman render edilecek ? Array’de belirtilen değerler değiştiği anda bir hesaplama yapılır ve ona göre render edilir.
 
+<h3>useCallback</h3>
+
+Butona basıp arttırma işlemini Header componenti içerisinde yapalım.
+
+App.js
+
+```js
+import './App.css';
+import { useState, useMemo } from 'react';
+import Header from './components/Header';
+function App() {
+  const [number, setNumber]=useState(0);
+  // const data=useMemo(() => {
+  //   return {name:"Ali", number}
+  // },[]);
+  return (
+    <div className="App">
+      <Header inc={()=>setNumber(number+1)}/>
+      <h1>{number}</h1>
+   
+      
+    </div>
+  );
+}
+
+export default App;
+```
+
+Header.js
+
+```js
+import React from 'react'
+
+function Header({inc}) {
+console.log("Header component re-rendered")
+  return (
+    <div>
+      Header
+      <br /><br />
+      <button onClick={inc}>Click</button>
+    </div>
+  )
+}
+
+export default React.memo(Header)
+```
+
+Burada gördüğümüz üzere number her arttığında Header yeniden render edilmekte. Peki neden ? App.js de return’ün içi number her arttığında render oluyor. return içerisinde bulunan “ <Header inc={()=>setNumber(number+1)}/>” da baştan hesap ediliyor. Baştan hesaplanınca Header componentinde React.memo olmasına rağmen sanki yeni bir prop varmış gibi algılanıp tekrar tekrar render ediliyor.
+
+Bizim burada yapmamız gereken propun değişmediğini aynı kaldığını söylemek olacak. Bunu “useCallBack” hooku ile söyleyeceğiz. Bu hook ile fonksiyon döneceğiz. Dependency array de verdiğimiz datalar değişene kadar yeniden render işlemi gerçekleşmiyor.
+
+useCallback’i import edelim.
+
+
+Kullanımı useEfect ve useMemo’ya benziyor.
+
+```js
+const inc= useCallback(() => {
+  setNumber(number+1)
+},[number])
+```
+
+
+Burada karşımıza bir problem çıkıyor. number’ı array içerisinde vermezsek number’ı hep 0 olarak alıyor. 0+1 şeklinde devam ediyor. Eğer number’ı array içerisinde verirsek de Header’ı her number değiştiğinde render edecek. Peki bunu nasıl çözeceğiz ? Array’deki number’dan kurtulmamız lazım.
+
+
+```js
+
+const inc= useCallback(() => {
+  setNumber(n=>n+1)
+},[])
+```
+
+diyerek number kullanmadık. n⇒n+1 ile bu işi çözdük.
+
+Eğer bir fonksiyonumuz varsa ve bu fonksiyonu herhangi alt bir componente geçiriyorsak; o alt component’de de tekrar tekrar render edilmesini istemiyorsak fonksiyonlar üzerinde useCallback’i kullanabiliriz.
