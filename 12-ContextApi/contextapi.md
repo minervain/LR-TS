@@ -124,3 +124,180 @@ export default Button
 Console’a bakalım
 
 <img src ='https://miro.medium.com/v2/resize:fit:720/format:webp/1*bmIzGmgO9_3pY-bdLQHptw.png'/>
+
+
+<h2>Context Provider</h2>
+Burada genel olarak context’den sağlamış olmuş datalarımız değiştiğinde, kullanılan componentlerde de anlık olarak bir değişim olup olmadığını inceleyeceğiz.
+
+React’da children isimli bir olay var. Biz App.js içerisinde Button içerisinde bir p tag’i tanımlayalım.
+
+```js
+import './App.css';
+import ThemeContext from './context/ThemeContext';
+import Button from './components/Button';
+function App() {
+  return (
+    <div className="App">
+      <ThemeContext.Provider value="dark">
+        <Button>
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            Delectus beatae consequatur quidem, ullam aut dolor at earum modi 
+            laudantium provident minus molestiae tempore doloribus, 
+            impedit cumque aliquid! Harum, recusandae quaerat!</p>
+        </Button>
+      </ThemeContext.Provider>
+    </div>
+  );
+}
+
+export default App;
+```
+
+Bu p tag’ini Button.js den çağırırken şöyle kullanırız.
+
+```js
+
+import {useContext} from 'react';
+import ThemeContext from '../context/ThemeContext';
+
+function Button({children}) {
+    const data=useContext(ThemeContext);
+    // console.log(data);
+  return (
+    <div>
+      Button ({data})
+      {children}
+    </div>
+  )
+}
+export default Button
+```
+
+Ekran görüntüsü
+
+<img src='https://miro.medium.com/v2/resize:fit:4800/format:webp/1*6s4iy4YA3bX15Ik-StkDsw.png'/>
+
+Daha önce Provider’ı App.js de tanımlamıştık. Daha temiz bir görünüm için Provider’ı context’imiz içerisinde tanımlayabiliriz.
+
+ThemeContext.js içeriğini şu şekilde değiştirelim.
+
+```js
+import { createContext } from "react";
+
+const ThemeContext = createContext();
+export const ThemeProvider = ({children})=>{
+    return <ThemeContext.Provider value="dark">{children}</ThemeContext.Provider>
+}
+export default ThemeContext;
+
+```
+
+App.js içerisindeki import ve ThemeContext içeriğini de şu şekilde değiştirelim.
+
+```js
+import './App.css';
+import {ThemeProvider}from './context/ThemeContext';
+import Button from './components/Button';
+function App() {
+  return (
+    <div className="App">
+      <ThemeProvider>
+        <Button/>
+      </ThemeProvider>
+    </div>
+  );
+}
+
+export default App;
+
+
+```
+Bu sayede context ile ilgili tüm işlemlerimizi ThemeContext.js dosyası içerisinde hallediyoruz ve kodumuzu daha düzenli hale getirmiş oluyoruz.
+
+Şimdi de dark datasını bir state olarak tanımlayalım.
+
+```js
+import { createContext, useState } from "react";
+
+const ThemeContext = createContext();
+export const ThemeProvider = ({children})=>{
+    const [theme, setTheme ]= useState("dark");
+    const values={
+        theme,
+        setTheme,
+    };
+    return <ThemeContext.Provider value={values}>{children}</ThemeContext.Provider>
+}
+export default ThemeContext;
+
+```
+Yukarıda ThemeContext.js içerisinde useState ile varsayılan datayı dark olarak aldık. values objesine theme ve setTheme’i gönderdik. values’i de value’ya atadık.
+
+Button.js içerisinde ThemeContext’ten aldığımız theme’i ekranda gösterelim.
+
+
+
+````js
+
+import {useContext} from 'react';
+import ThemeContext from '../context/ThemeContext';
+
+function Button() {
+    const {theme, setTheme}=useContext(ThemeContext);
+    //  console.log(data);
+  return (
+    <div>
+     Active Theme : {theme}
+    </div>
+  )
+}
+export default Button
+```
+
+<img src="https://miro.medium.com/v2/resize:fit:4800/format:we
+bp/1*6s4iy4YA3bX15Ik-StkDsw.png"/>
+
+
+Button.js de bir buton tanımlayalım ve bu butona tıklandığında setTheme çalışsın ve Active Theme’nın durumunu değiştirsin. Her tıklandığında durum değişecek.
+
+
+
+```
+
+js
+
+return (
+    <div>
+     Active Theme : {theme}
+     <br />
+     <button onClick={() => setTheme("light")}>Change Theme</button>
+    </div>
+  )
+```
+
+<p>Bu işlemleri başka bir component’de de yapmaya çalışalım. components dizini altında Header.js adında bir dosya oluşturalım. Gerekli işlemleri daha önce yaptığımız gibi yapıyoruz.<p/>
+
+
+
+
+```js
+
+import {useContext} from 'react'
+import ThemeContext from '../context/ThemeContext'
+function Header() {
+    const {theme, setTheme}=useContext(ThemeContext);
+  return (
+    <div>
+     Header Active Theme : {theme}
+     <br />
+     <button onClick={() => setTheme(theme ==="light" ? "dark" : "light")}>Change Theme</button>
+    </div>
+  )
+}
+
+export default Header
+
+```
+
+
+Görüldüğü gibi tek butona basılmasına rağmen farklı iki componentte bulunan theme değerleri aynı anda değişti. Bunu bize context yapısı sağladı.
