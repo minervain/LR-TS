@@ -1,4 +1,4 @@
-<h1>Context Api </h1>d
+<h1>Context Api </h1>
 
 <img src='https://www.loginradius.com/blog/static/157af7ff069ab273224b4718433d9790/03979/title-image.png'/>
 
@@ -237,7 +237,7 @@ Button.js içerisinde ThemeContext’ten aldığımız theme’i ekranda göster
 
 
 
-````js
+```js
 
 import {useContext} from 'react';
 import ThemeContext from '../context/ThemeContext';
@@ -254,17 +254,15 @@ function Button() {
 export default Button
 ```
 
-<img src="https://miro.medium.com/v2/resize:fit:4800/format:we
-bp/1*6s4iy4YA3bX15Ik-StkDsw.png"/>
+
+<img src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*6s4iy4YA3bX15Ik-StkDsw.png"/>
 
 
 Button.js de bir buton tanımlayalım ve bu butona tıklandığında setTheme çalışsın ve Active Theme’nın durumunu değiştirsin. Her tıklandığında durum değişecek.
 
 
 
-```
-
-js
+```js
 
 return (
     <div>
