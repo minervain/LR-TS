@@ -449,7 +449,7 @@ const validations = yup.object().shape({
     passwordConfirm: yup.string().oneOf([yup.ref("password")]).required()
 });
  
-export default validations;
+export default validations;s
 ```
 <img src='https://miro.medium.com/v2/resize:fit:4800/format:webp/1*9Ivysse7_ZWpKlAJXaUTVQ.png'/>
 
